@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management</title>
+    <script>
+        async function getAllCustomers() {
+            const response = await fetch('/api/customers');
+            const customers = await response.json();
+            document.getElementById('customers').innerHTML = JSON.stringify(customers, null, 2);
+        }
+
+        async function addCustomer() {
+            const customer = {
+                name: document.getElementById('name').value,
+                age: document.getElementById('age').value,
+                address: document.getElementById('address').value,
+                contact: document.getElementById('contact').value,
+            };
+            await fetch('/api/customers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(customer),
+            });
+            getAllCustomers();
+        }
+    </script>
+</head>
+<body onload="getAllCustomers()">
+<h1>Customer Management</h1>
+<div>
+    <label>Name: <input type="text" id="name"></label><br>
+    <label>Age: <input type="number" id="age"></label><br>
+    <label>Address: <input type="text" id="address"></label><br>
+    <label>Contact: <input type="text" id="contact"></label><br>
+    <button onclick="addCustomer()">Add Customer</button>
+</div>
+<pre id="customers"></pre>
+</body>
+</html>
