@@ -14,7 +14,13 @@ public class CustomerResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Customer> getAllCustomers() {
+//        return customers;
+
+        // Print the customer list to the IntelliJ terminal
+        System.out.println("Fetching all customers:");
+        customers.forEach(System.out::println);
         return customers;
+
     }
 
     @POST
@@ -22,7 +28,12 @@ public class CustomerResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addCustomer(Customer customer) {
         customers.add(customer);
+//        return Response.status(Response.Status.CREATED).entity(customer).build();
+
+        // Log the new customer to the IntelliJ terminal
+        System.out.println("Added new customer: " + customer);
         return Response.status(Response.Status.CREATED).entity(customer).build();
+
     }
 
     @PUT
@@ -35,7 +46,12 @@ public class CustomerResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         customers.set(id, updatedCustomer);
-        return Response.status(Response.Status.OK).build();
+//        return Response.status(Response.Status.OK).build();
+
+        // Log the updated customer to the IntelliJ terminal
+        System.out.println("Updated customer with ID " + id + ": " + updatedCustomer);
+        return Response.ok(updatedCustomer).build();
+
     }
 
     @DELETE
@@ -46,7 +62,13 @@ public class CustomerResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         customers.remove(id);
-        return Response.ok("Customer removed successfully..!").build();
+//        return Response.ok("Customer removed successfully..!").build();
+
+        // Log the deleted customer to the IntelliJ terminal
+        Customer removedCustomer = customers.remove(id);
+        System.out.println("Deleted customer: " + removedCustomer);
+        return Response.ok("Customer removed successfully").build();
+
     }
 
 }
